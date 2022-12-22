@@ -70,7 +70,7 @@ input[type="submit"] {
     background-color: var(--headerColor);
 }
 
-main h1 {
+.read-header, .toread-header {
     margin: 0 2.5rem;
     margin-top: 3.5rem;
 }
@@ -129,8 +129,9 @@ section {
 }
 
 .book-color {
-    width: 100%;
-    height: 0.25rem;
+    margin: 0 0 auto 0;
+    width: 0.5rem;
+    height: 0.5rem;
     border-radius: 1.25rem;
 }
 
@@ -144,5 +145,4 @@ section {
 
 .hidden {
     display: none;
-    
 }

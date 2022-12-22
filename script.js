@@ -50,20 +50,19 @@ function createCard(book) {
     const author = document.createElement('p');
     const divider = document.createElement('hr');
     const pages = document.createElement('p');
-    const isRead = document.createElement('p');
     const remove = document.createElement('button');
     const statusColor = document.createElement('div');
 
     title.innerHTML = book.title;
     author.innerHTML = book.author;
-    pages.innerHTML = `Pages: ${book.pages}`;
-    isRead.innerHTML = `Status: ${checkStatus(book)}`;
     remove.innerHTML = 'X';
     statusColor.innerHTML = ' '
 
+    if (book.pages.trim() === '') pages.innerHTML = '';
+    else pages.innerHTML = `Pages: ${book.pages}`;
+
     card.dataset.book = book.title;
     card.dataset.id = genID();
-
     remove.addEventListener('click', () => {
         removeBook(card.dataset.book, card.dataset.id)
         updateMain();
@@ -75,7 +74,6 @@ function createCard(book) {
     author.classList.add('book-author');
     divider.classList.add('card-divider');
     pages.classList.add('book-pages');
-    isRead.classList.add('book-status');
     remove.classList.add('book-remove');
     statusColor.classList.add('book-color');
 
@@ -87,7 +85,7 @@ function createCard(book) {
         cardHeader.appendChild(item);
     })
 
-    const cardItems = [cardHeader, divider, pages, isRead, statusColor];
+    const cardItems = [cardHeader, divider, pages, statusColor];
 
     cardItems.forEach((item) => {
         card.appendChild(item);
@@ -97,10 +95,6 @@ function createCard(book) {
     else unfinishedBooks.appendChild(card);
 }
 
-function checkStatus(book) {
-    if (book.isRead === true) return "Read";
-    else return "Not Read";
-}
 
 function genID() {
     return "id" + Math.random().toString(36);
@@ -111,6 +105,19 @@ function removeBook(titleToRemove, id) {
     const card = document.querySelector(`article[data-id='${id}']`);
     card.remove();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
