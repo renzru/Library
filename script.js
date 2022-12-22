@@ -1,8 +1,8 @@
 let userLibrary = [];
 
-function addBook() {}
+function addBookToLib() {}
 
-addBook.prototype.newArr = function () {
+addBookToLib.prototype.pushToLib = function () {
     userLibrary.push(this);
 }
 
@@ -13,25 +13,23 @@ function Book(title, author, pages, status) {
         this.status = status
 }
 
-Book.prototype = Object.create(addBook.prototype);
+Book.prototype = Object.create(addBookToLib.prototype);
 
-const book1 = new Book('Holes', 'Louis Sachar', 251, 'Read');
-book1.newArr();
 
-function updatePage() {
 
-}
-
+const main = document.querySelector('main');
 const submitButton = document.querySelector('input[type = "submit"]');
 let titleEntry = document.querySelector('#title');
 let authorEntry = document.querySelector('#author');
 let pagesEntry = document.querySelector('#pages');
 let statusEntry = document.querySelector('#status');
-const main = document.querySelector('main');
 
 submitButton.addEventListener('click', (e) => {
     e.preventDefault();
     addCard();
+
+    const book = new Book(titleEntry.value, authorEntry.value, pagesEntry.value, statusEntry.value);
+    book.pushToLib();
 });
 
 function addCard() {
