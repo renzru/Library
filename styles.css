@@ -72,16 +72,17 @@ input[type="submit"] {
 }
 
 .read-header, .toread-header {
-    margin: 0 2.5rem;
     margin-top: 3.5rem;
 }
 
+main {
+    margin: 1.25rem 2.5rem;
+}
 section {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
     grid-auto-rows: max-content;
     gap: 1rem;
-    margin: 1.25rem 2.5rem;
     margin-bottom: 2.5rem;
     transition: all 0.25s ease;
 }
@@ -145,13 +146,18 @@ section {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 1.25rem;
+    transition: all 0.25s ease;
+}
+
+.book-color:hover {
+    transform: scale(2.5);
 }
 
 .read {
     background-color: var(--read);
 }
 
-.notread {
+.toread {
     background-color: var(--notread);
 }
 

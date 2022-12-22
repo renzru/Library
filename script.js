@@ -43,6 +43,28 @@ function getBookObj() {
     return book;
 }
 
+function switchReadStatus(book, statusColor, card) {
+    book.isRead = book.isRead !== true;
+    console.log(book.isRead);
+
+    if (book.isRead === true) {
+        statusColor.classList.remove('toread');
+        statusColor.classList.add('read');
+        finishedBooks.classList.remove('hidden');
+        finishedHeader.classList.remove('hidden');
+        finishedBooks.appendChild(card);
+    } else {
+        statusColor.classList.remove('read');
+        statusColor.classList.add('toread');
+        unfinishedBooks.classList.remove('hidden');
+        unfinishedHeader.classList.remove('hidden');
+        unfinishedBooks.appendChild(card);
+    }
+
+    updateSection();
+
+}
+
 function createCard(book) {
     const card = document.createElement('article');
     const cardHeader = document.createElement('div');
@@ -78,7 +100,7 @@ function createCard(book) {
     statusColor.classList.add('book-color');
 
     if (book.isRead === true) statusColor.classList.add('read');
-    else statusColor.classList.add('notread');
+    else statusColor.classList.add('toread');
 
     const headerItems = [remove, title, author];
     headerItems.forEach((item) => {
@@ -93,6 +115,10 @@ function createCard(book) {
 
     if (book.isRead === true) finishedBooks.appendChild(card);
     else unfinishedBooks.appendChild(card);
+
+    statusColor.addEventListener('click', () => {
+        switchReadStatus(book, statusColor, card);
+    })
 }
 
 
