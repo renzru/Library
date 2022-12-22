@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+:root {
+    font-family: 'Playfair Display', serif;
+    --headerColor: #2e4eca;
+}
+
+body {
+    display: grid;
+    grid-auto-rows: max-content;
+}
+
+header {
+    background-color: #2e4eca;
+    text-align: center;
+}
+
+header h1 {
+    color: white;
+    letter-spacing: 1px;
+}
+
+main {
+    background-color: white;
+    border-radius: 2.5rem;
+}
