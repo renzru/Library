@@ -15,8 +15,11 @@ function Book(title, author, pages, isRead) {
 
 Book.prototype = Object.create(addBookToLib.prototype);
 
+const main = document.querySelector('main');
 const finishedBooks = document.querySelector('.books-read');
 const unfinishedBooks = document.querySelector('.books-toread');
+const finishedHeader = document.querySelector('.read-header')
+const unfinishedHeader = document.querySelector('.toread-header')
 const submitButton = document.querySelector('input[type = "submit"]');
 let titleEntry = document.querySelector('#title');
 let authorEntry = document.querySelector('#author');
@@ -25,20 +28,29 @@ let isReadEntry = document.querySelector('#status');
 
 submitButton.addEventListener('click', (e) => {
     if (titleEntry.value.trim() === '') return;
+    main.classList.remove('hidden');
+
     e.preventDefault();
     createCard(getBookObj());
+    updateSection();
 });
+
+function updateSection() {
+    if (finishedBooks.hasChildNodes() === true) {
+        finishedBooks.classList.remove('hidden');
+        finishedHeader.classList.remove('hidden');
+    }
+    if (unfinishedBooks.hasChildNodes() === true) {
+        unfinishedBooks.classList.remove('hidden');
+        unfinishedHeader.classList.remove('hidden');
+    }
+}
 
 function getBookObj() {
     const book = new Book(titleEntry.value, authorEntry.value, pagesEntry.value, isReadEntry.checked);
     book.pushToLib();
+
     return book;
-}
-
-
-function checkStatus(book) {
-    if (book.isRead === true) return "Read";
-    else return "Not Read";
 }
 
 function createCard(book) {
@@ -62,6 +74,7 @@ function createCard(book) {
 
     remove.addEventListener('click', () => {
         removeBook(card.dataset.book, card.dataset.id)
+        updateMain();
     });
 
     card.classList.add('book-card');
@@ -86,6 +99,22 @@ function createCard(book) {
 
     if (book.isRead === true) finishedBooks.appendChild(card);
     else unfinishedBooks.appendChild(card);
+}
+
+function checkStatus(book) {
+    if (book.isRead === true) return "Read";
+    else return "Not Read";
+}
+
+function updateMain() {
+    if (finishedBooks.hasChildNodes() === false && unfinishedBooks.hasChildNodes() === false) {
+        main.classList.add('hidden');
+        finishedBooks.classList.add('hidden');
+        finishedHeader.classList.add('hidden');
+        unfinishedBooks.classList.add('hidden');
+        unfinishedHeader.classList.add('hidden');
+    }
+
 }
 
 function genID() {

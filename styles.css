@@ -30,7 +30,8 @@ body {
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    margin: 1.25rem;
+    margin: 1.25rem 2.5rem;
+    margin-bottom: unset;
     padding: 0.5rem 2.5rem;
     background-color: white;
     border-radius: 0.75rem;
@@ -67,18 +68,21 @@ input[type="submit"] {
     background-color: var(--headerColor);
 }
 
-main {
+main h1 {
+    margin: 0 2.5rem;
+    margin-top: 3.5rem;
+}
+
+section {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
     grid-auto-rows: max-content;
     gap: 1rem;
-    margin: 1.25rem;
+    margin: 1.25rem 2.5rem;
+    margin-bottom: 2.5rem;
     transition: all 0.25s ease;
 }
 
-.section-header {
-    margin: 0 1.25rem;
-}
 
 .book-card {
     display: grid;
@@ -120,4 +124,9 @@ main {
     font-size: 1rem;
     margin-top: -1.25rem;
     color: var(--textLight);
+}
+
+.hidden {
+    display: none;
+    
 }
