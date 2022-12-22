@@ -35,26 +35,37 @@ function getBookObj() {
 }
 
 function createCard(book) {
-    const card = document.createElement('div');
+    const card = document.createElement('article');
+    const cardHeader = document.createElement('div');
     const title = document.createElement('h1');
     const author = document.createElement('p');
     const divider = document.createElement('hr');
     const pages = document.createElement('p');
     const isRead = document.createElement('p');
+    const remove = document.createElement('button');
+
 
     title.innerHTML = book.title;
     author.innerHTML = book.pages;
     pages.innerHTML = book.pages;
     isRead.innerHTML = book.isRead;
+    remove.innerHTML = 'X';
 
     card.classList.add('book-card');
+    cardHeader.classList.add('card-header');
     title.classList.add('book-title');
     author.classList.add('book-author');
     divider.classList.add('card-divider');
     pages.classList.add('book-pages');
     isRead.classList.add('book-status');
+    remove.classList.add('book-remove');
 
-    const cardItems = [title, author, divider, pages, isRead];
+    const headerItems = [remove, title, author];
+    headerItems.forEach((item) => {
+        cardHeader.appendChild(item);
+    })
+
+    const cardItems = [cardHeader, divider, pages, isRead];
 
     cardItems.forEach((item) => {
         card.appendChild(item);

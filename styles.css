@@ -85,6 +85,20 @@ main {
     box-shadow: var(--dropShadow);
 }
 
+.card-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-remove { 
+    align-self: flex-end;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-align: center;
+    border: none;
+    border-radius: 1.25rem;
+}
+
 .card-divider {
     width: 100%;
     height: 1px;
@@ -92,15 +106,10 @@ main {
     background-color: var(--textLight);
 }
 
-.book-genre {
-    font-size: 0.85rem;
-    color: var(--textLight);
-    line-height: 0;
-    margin: 0;
-}
-
 .book-title {
     color: var(--textBlack);
+    margin-top: -0.1rem;
+    word-break: break-all;
 }
 
 .book-author {
