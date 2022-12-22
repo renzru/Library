@@ -15,8 +15,6 @@ function Book(title, author, pages, status) {
 
 Book.prototype = Object.create(addBookToLib.prototype);
 
-
-
 const main = document.querySelector('main');
 const submitButton = document.querySelector('input[type = "submit"]');
 let titleEntry = document.querySelector('#title');
@@ -25,12 +23,16 @@ let pagesEntry = document.querySelector('#pages');
 let statusEntry = document.querySelector('#status');
 
 submitButton.addEventListener('click', (e) => {
+    if (titleEntry.value.trim() === '') return;
     e.preventDefault();
     addCard();
+    getBookObj();
+});
 
+function getBookObj() {
     const book = new Book(titleEntry.value, authorEntry.value, pagesEntry.value, statusEntry.value);
     book.pushToLib();
-});
+}
 
 function addCard() {
     const card = document.createElement('div');
