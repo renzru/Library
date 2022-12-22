@@ -3,9 +3,10 @@
 :root {
     font-family: 'Playfair Display', serif;
     --headerColor: #2e4eca;
-    --mainBackground: #ececec;
+    --mainBackground: #f3f3f5;
     --textBlack: #1d1d1d;
     --textLight: #cacaca;
+    --dropShadow: 0px 0.5px 0.15rem rgb(0, 0, 0, 0.225);
 }
 
 header {
@@ -38,6 +39,7 @@ main {
     padding: 1.5rem;
     background-color: white;
     border-radius: 0.75rem;
+    box-shadow: var(--dropShadow);
 }
 
 .card-divider {
