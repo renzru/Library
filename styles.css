@@ -39,6 +39,7 @@ body {
 
 .book-form h1 {
     font-family: 'Roboto';
+    white-space: nowrap;
 }
 
 .book-form input {
@@ -59,7 +60,6 @@ input[type="checkbox"] {
 }
 
 input[type="submit"] {
-    padding: unset;
     padding: 0.1rem 1.25rem;
     font-family: 'Roboto';
     font-weight: normal;
