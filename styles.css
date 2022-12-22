@@ -76,9 +76,13 @@ main {
     transition: all 0.25s ease;
 }
 
+.section-header {
+    margin: 0 1.25rem;
+}
+
 .book-card {
     display: grid;
-    grid-template-rows: max-content;
+    grid-template-rows: repeat(max-content, minmax(2.5em, 1fr));
     padding: 1.5rem;
     background-color: white;
     border-radius: 0.75rem;

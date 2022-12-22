@@ -15,7 +15,8 @@ function Book(title, author, pages, isRead) {
 
 Book.prototype = Object.create(addBookToLib.prototype);
 
-const main = document.querySelector('main');
+const finishedBooks = document.querySelector('.books-read');
+const unfinishedBooks = document.querySelector('.books-toread');
 const submitButton = document.querySelector('input[type = "submit"]');
 let titleEntry = document.querySelector('#title');
 let authorEntry = document.querySelector('#author');
@@ -35,6 +36,11 @@ function getBookObj() {
 }
 
 
+function checkStatus(book) {
+    if (book.isRead === true) return "Read";
+    else return "Not Read";
+}
+
 function createCard(book) {
     const card = document.createElement('article');
     const cardHeader = document.createElement('div');
@@ -47,8 +53,8 @@ function createCard(book) {
 
     title.innerHTML = book.title;
     author.innerHTML = book.author;
-    pages.innerHTML = book.pages;
-    isRead.innerHTML = book.isRead;
+    pages.innerHTML = `Pages: ${book.pages}`;
+    isRead.innerHTML = `Status: ${checkStatus(book)}`;
     remove.innerHTML = 'X';
 
     card.dataset.book = book.title;
@@ -78,7 +84,8 @@ function createCard(book) {
         card.appendChild(item);
     });
 
-    main.appendChild(card);
+    if (book.isRead === true) finishedBooks.appendChild(card);
+    else unfinishedBooks.appendChild(card);
 }
 
 function genID() {
