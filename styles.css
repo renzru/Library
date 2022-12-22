@@ -3,6 +3,9 @@
 :root {
     font-family: 'Playfair Display', serif;
     --headerColor: #2e4eca;
+    --mainBackground: #ececec;
+    --textBlack: #1d1d1d;
+    --textLight: #cacaca;
 }
 
 header {
@@ -18,9 +21,45 @@ header h1 {
 body {
     display: grid;
     grid-auto-rows: max-content;
+    background-color: var(--mainBackground);
 }
 
 main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+    grid-auto-rows: max-content;
+    gap: 1rem;
+    margin: 1.25rem;
+}
+
+.book-card {
+    display: grid;
+    grid-template-rows: max-content;
+    padding: 1.5rem;
     background-color: white;
-    border-radius: 2.5rem;
+    border-radius: 0.75rem;
+}
+
+.card-divider {
+    width: 100%;
+    height: 1px;
+    border: none;
+    background-color: var(--textLight);
+}
+
+.book-genre {
+    font-size: 0.85rem;
+    color: var(--textLight);
+    line-height: 0;
+    margin: 0;
+}
+
+.book-title {
+    color: var(--textBlack);
+}
+
+.book-author {
+    font-size: 1rem;
+    margin-top: -1.25rem;
+    color: var(--textLight);
 }
