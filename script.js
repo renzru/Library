@@ -17,3 +17,7 @@ Book.prototype = Object.create(addBook.prototype);
 
 const book1 = new Book('Holes', 'Louis Sachar', 251, 'Read');
 book1.newArr();
+
+function updatePage() {
+
+}
