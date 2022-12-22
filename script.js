@@ -55,7 +55,7 @@ function createCard(book) {
 
     title.innerHTML = book.title;
     author.innerHTML = book.author;
-    remove.innerHTML = 'X';
+    remove.innerHTML = 'x';
     statusColor.innerHTML = ' '
 
     if (book.pages.trim() === '') pages.innerHTML = '';
