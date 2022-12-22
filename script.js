@@ -82,6 +82,6 @@ function createCard(book) {
 
 function removeBook(titleToRemove) {
     userLibrary = userLibrary.filter((book) => book.title !== titleToRemove);
-    const card = document.querySelector(`article[data-book=${titleToRemove}]`);
+    const card = document.querySelector(`article[data-book='${titleToRemove}']`);
     card.remove();
 }
