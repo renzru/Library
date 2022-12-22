@@ -34,6 +34,7 @@ function getBookObj() {
     return book;
 }
 
+
 function createCard(book) {
     const card = document.createElement('article');
     const cardHeader = document.createElement('div');
@@ -51,10 +52,10 @@ function createCard(book) {
     remove.innerHTML = 'X';
 
     card.dataset.book = book.title;
-    remove.dataset.book = book.title;
+    card.dataset.id = genID();
 
     remove.addEventListener('click', () => {
-        removeBook(remove.dataset.book)
+        removeBook(card.dataset.book, card.dataset.id)
     });
 
     card.classList.add('book-card');
@@ -80,8 +81,12 @@ function createCard(book) {
     main.appendChild(card);
 }
 
-function removeBook(titleToRemove) {
+function genID() {
+    return "id" + Math.random().toString(36);
+}
+
+function removeBook(titleToRemove, id) {
     userLibrary = userLibrary.filter((book) => book.title !== titleToRemove);
-    const card = document.querySelector(`article[data-book='${titleToRemove}']`);
+    const card = document.querySelector(`article[data-id='${id}']`);
     card.remove();
 }
