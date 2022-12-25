@@ -5,11 +5,11 @@ class Book {
     this.pages = pages,
     this.isRead = isRead;
   }
-
-  addToLibrary(library) {
-    library.push(this);
-  }
 }
+
+Book.prototype.addToLibrary = (library, book) => {
+  library.push(book);
+};
 
 const populatePage = () => {
   let userLibrary = [];
@@ -21,18 +21,19 @@ const populatePage = () => {
   const bookPages = document.querySelector('#pages');
   const bookisRead = document.querySelector('#read');
 
-  function initializeButtons() {
+  function initialize() {
     submitButton.addEventListener('click', (e) => {
       if (emptyInput(bookTitle.value)) return;
 
       e.preventDefault();
       createCard(getBook());
+      console.log(userLibrary);
     });
   }
 
   function getBook() {
     const book = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookisRead.checked);
-    book.addToLibrary(userLibrary);
+    book.addToLibrary(userLibrary, book);
 
     return book;
   }
@@ -119,8 +120,8 @@ const populatePage = () => {
   }
 
   return {
-    initializeButtons,
+    initialize,
   };
 };
 
-populatePage().initializeButtons();
+populatePage().initialize();
