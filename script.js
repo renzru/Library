@@ -1,185 +1,119 @@
 let userLibrary = [];
 
-function addBookToLib() {}
-
-addBookToLib.prototype.pushToLib = function () {
-    userLibrary.push(this);
-}
-
 function Book(title, author, pages, isRead) {
-    this.title = title,
-        this.author = author,
-        this.pages = pages,
-        this.isRead = isRead
+  function addToLibrary() {
+    userLibrary.push(this);
+  }
+
+  return {
+    title,
+    author,
+    pages,
+    isRead,
+    addToLibrary,
+  };
 }
 
-Book.prototype = Object.create(addBookToLib.prototype);
-
-const main = document.querySelector('main');
-const finishedBooks = document.querySelector('.books-read');
-const unfinishedBooks = document.querySelector('.books-toread');
-const finishedHeader = document.querySelector('.read-header')
-const unfinishedHeader = document.querySelector('.toread-header')
-const sectionDivider = document.querySelector('.section-divider');
+const readBooks = document.querySelector('.books-read');
+const notreadBooks = document.querySelector('.books-toread');
 const submitButton = document.querySelector('input[type = "submit"]');
-let titleEntry = document.querySelector('#title');
-let authorEntry = document.querySelector('#author');
-let pagesEntry = document.querySelector('#pages');
-let isReadEntry = document.querySelector('#status');
+const bookTitle = document.querySelector('#title');
+const bookAuthor = document.querySelector('#author');
+const bookPages = document.querySelector('#pages');
+const bookisRead = document.querySelector('#read');
 
 submitButton.addEventListener('click', (e) => {
-    if (titleEntry.value.trim() === '') return;
-    main.classList.remove('hidden');
+  if (emptyInput(bookTitle.value)) return;
 
-    e.preventDefault();
-    createCard(getBookObj());
-    updateSection();
+  e.preventDefault();
+  createCard(getBookObj());
 });
 
-function getBookObj() {
-    const book = new Book(titleEntry.value, authorEntry.value, pagesEntry.value, isReadEntry.checked);
-    book.pushToLib();
-
-    return book;
+function emptyInput(input) {
+  return input.trim() === '';
 }
 
-function switchReadStatus(book, statusColor, card) {
-    book.isRead = book.isRead !== true;
-    console.log(book.isRead);
+function getBookObj() {
+  const book = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookisRead.checked);
+  book.addToLibrary();
 
-    if (book.isRead === true) {
-        statusColor.classList.remove('toread');
-        statusColor.classList.add('read');
-        finishedBooks.classList.remove('hidden');
-        finishedHeader.classList.remove('hidden');
-        finishedBooks.appendChild(card);
-    } else {
-        statusColor.classList.remove('read');
-        statusColor.classList.add('toread');
-        unfinishedBooks.classList.remove('hidden');
-        unfinishedHeader.classList.remove('hidden');
-        unfinishedBooks.appendChild(card);
-    }
+  return book;
+}
 
-    updateSection();
+function switchReadStatus(book, status, card) {
+  // eslint-disable-next-line no-param-reassign
+  book.isRead = book.isRead !== true;
 
+  if (book.isRead === true) {
+    status.classList.remove('toread');
+    status.classList.add('read');
+    readBooks.appendChild(card);
+  } else {
+    status.classList.remove('read');
+    status.classList.add('toread');
+    notreadBooks.appendChild(card);
+  }
 }
 
 function createCard(book) {
-    const card = document.createElement('article');
-    const cardHeader = document.createElement('div');
-    const title = document.createElement('h1');
-    const author = document.createElement('p');
-    const divider = document.createElement('hr');
-    const pages = document.createElement('p');
-    const remove = document.createElement('button');
-    const statusColor = document.createElement('div');
+  const card = document.createElement('article');
+  const headerWrapper = document.createElement('div');
+  const title = document.createElement('h1');
+  const author = document.createElement('p');
+  const divider = document.createElement('hr');
+  const pages = document.createElement('p');
+  const deleteButton = document.createElement('button');
+  const status = document.createElement('div');
 
-    title.innerHTML = book.title;
-    author.innerHTML = book.author;
-    remove.innerHTML = 'x';
-    statusColor.innerHTML = ' '
+  title.innerHTML = book.title;
+  author.innerHTML = book.author;
+  deleteButton.innerHTML = 'x';
+  status.innerHTML = ' ';
+  if (emptyInput(book.pages)) pages.innerHTML = '';
+  else pages.innerHTML = `Pages: ${book.pages}`;
 
-    if (book.pages.trim() === '') pages.innerHTML = '';
-    else pages.innerHTML = `Pages: ${book.pages}`;
+  card.classList.add('card');
+  headerWrapper.classList.add('card-header');
+  title.classList.add('title');
+  author.classList.add('author');
+  divider.classList.add('card-divider');
+  pages.classList.add('pages');
+  deleteButton.classList.add('delete-button');
+  status.classList.add('status');
+  if (book.isRead === true) status.classList.add('read');
+  else status.classList.add('toread');
 
-    card.dataset.book = book.title;
-    card.dataset.id = genID();
-    remove.addEventListener('click', () => {
-        removeBook(card.dataset.book, card.dataset.id)
-        updateMain();
-    });
+  card.dataset.book = book.title;
+  card.dataset.id = genID();
+  deleteButton.addEventListener('click', () => {
+    removeBook(card.dataset.book, card.dataset.id);
+  });
 
-    card.classList.add('book-card');
-    cardHeader.classList.add('card-header');
-    title.classList.add('book-title');
-    author.classList.add('book-author');
-    divider.classList.add('card-divider');
-    pages.classList.add('book-pages');
-    remove.classList.add('book-remove');
-    statusColor.classList.add('book-color');
+  status.addEventListener('click', () => {
+    switchReadStatus(book, status, card);
+  });
 
-    if (book.isRead === true) statusColor.classList.add('read');
-    else statusColor.classList.add('toread');
+  const headerItems = [deleteButton, title, author];
+  headerItems.forEach((item) => {
+    headerWrapper.appendChild(item);
+  });
 
-    const headerItems = [remove, title, author];
-    headerItems.forEach((item) => {
-        cardHeader.appendChild(item);
-    })
+  const cardItems = [headerWrapper, divider, pages, status];
 
-    const cardItems = [cardHeader, divider, pages, statusColor];
+  cardItems.forEach((item) => {
+    card.appendChild(item);
+  });
 
-    cardItems.forEach((item) => {
-        card.appendChild(item);
-    });
-
-    if (book.isRead === true) finishedBooks.appendChild(card);
-    else unfinishedBooks.appendChild(card);
-
-    statusColor.addEventListener('click', () => {
-        switchReadStatus(book, statusColor, card);
-    })
+  if (book.isRead === true) readBooks.appendChild(card);
+  else notreadBooks.appendChild(card);
 }
 
-
 function genID() {
-    return "id" + Math.random().toString(36);
+  return `id${Math.random().toString(36)}`;
 }
 
 function removeBook(titleToRemove, id) {
-    userLibrary = userLibrary.filter((book) => book.title !== titleToRemove);
-    const card = document.querySelector(`article[data-id='${id}']`);
-    card.remove();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// For Appearance/ Eye-Candy 
-function updateSection() {
-    if (finishedBooks.hasChildNodes() === true && unfinishedBooks.hasChildNodes() === true) {
-        sectionDivider.classList.remove('hidden');
-    }
-
-    if (finishedBooks.hasChildNodes() === true) {
-        finishedBooks.classList.remove('hidden');
-        finishedHeader.classList.remove('hidden');
-    }
-    if (unfinishedBooks.hasChildNodes() === true) {
-        unfinishedBooks.classList.remove('hidden');
-        unfinishedHeader.classList.remove('hidden');
-    }
-}
-
-
-function updateMain() {
-    if (finishedBooks.hasChildNodes() === false || unfinishedBooks.hasChildNodes() === false) {
-        sectionDivider.classList.add('hidden');
-    }
-    if (finishedBooks.hasChildNodes() === false) {
-        finishedBooks.classList.add('hidden');
-        finishedHeader.classList.add('hidden');
-        sectionDivider.classList.add('hidden');
-    }
-    if (unfinishedBooks.hasChildNodes() === false) {
-        unfinishedBooks.classList.add('hidden');
-        unfinishedHeader.classList.add('hidden');
-        sectionDivider.classList.add('hidden');
-    }
-    if (finishedBooks.hasChildNodes() === false && unfinishedBooks.hasChildNodes() === false) {
-        main.classList.add('hidden');
-    }
+  userLibrary = userLibrary.filter((book) => book.title !== titleToRemove);
+  const card = document.querySelector(`article[data-id='${id}']`);
+  card.remove();
 }
