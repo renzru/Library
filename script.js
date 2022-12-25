@@ -15,7 +15,7 @@ function Book(title, author, pages, isRead) {
 }
 
 const readBooks = document.querySelector('.books-read');
-const notreadBooks = document.querySelector('.books-toread');
+const unreadBooks = document.querySelector('.books-toread');
 const submitButton = document.querySelector('input[type = "submit"]');
 const bookTitle = document.querySelector('#title');
 const bookAuthor = document.querySelector('#author');
@@ -26,33 +26,14 @@ submitButton.addEventListener('click', (e) => {
   if (emptyInput(bookTitle.value)) return;
 
   e.preventDefault();
-  createCard(getBookObj());
+  createCard(getBook());
 });
 
-function emptyInput(input) {
-  return input.trim() === '';
-}
-
-function getBookObj() {
+function getBook() {
   const book = new Book(bookTitle.value, bookAuthor.value, bookPages.value, bookisRead.checked);
   book.addToLibrary();
 
   return book;
-}
-
-function switchReadStatus(book, status, card) {
-  // eslint-disable-next-line no-param-reassign
-  book.isRead = book.isRead !== true;
-
-  if (book.isRead === true) {
-    status.classList.remove('toread');
-    status.classList.add('read');
-    readBooks.appendChild(card);
-  } else {
-    status.classList.remove('read');
-    status.classList.add('toread');
-    notreadBooks.appendChild(card);
-  }
 }
 
 function createCard(book) {
@@ -83,10 +64,9 @@ function createCard(book) {
   if (book.isRead === true) status.classList.add('read');
   else status.classList.add('toread');
 
-  card.dataset.book = book.title;
   card.dataset.id = genID();
   deleteButton.addEventListener('click', () => {
-    removeBook(card.dataset.book, card.dataset.id);
+    removeBook(card.dataset.id);
   });
 
   status.addEventListener('click', () => {
@@ -99,13 +79,31 @@ function createCard(book) {
   });
 
   const cardItems = [headerWrapper, divider, pages, status];
-
   cardItems.forEach((item) => {
     card.appendChild(item);
   });
 
   if (book.isRead === true) readBooks.appendChild(card);
-  else notreadBooks.appendChild(card);
+  else unreadBooks.appendChild(card);
+}
+
+function emptyInput(input) {
+  return input.trim() === '';
+}
+
+function switchReadStatus(book, status, card) {
+  // eslint-disable-next-line no-param-reassign
+  book.isRead = book.isRead !== true;
+
+  if (book.isRead === true) {
+    status.classList.remove('toread');
+    status.classList.add('read');
+    readBooks.appendChild(card);
+  } else {
+    status.classList.remove('read');
+    status.classList.add('toread');
+    unreadBooks.appendChild(card);
+  }
 }
 
 function genID() {
