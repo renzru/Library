@@ -66,7 +66,7 @@ function createCard(book) {
 
   card.dataset.id = genID();
   deleteButton.addEventListener('click', () => {
-    removeBook(card.dataset.id);
+    removeBook(book.title, card.dataset.id);
   });
 
   status.addEventListener('click', () => {
@@ -110,8 +110,9 @@ function genID() {
   return `id${Math.random().toString(36)}`;
 }
 
-function removeBook(titleToRemove, id) {
-  userLibrary = userLibrary.filter((book) => book.title !== titleToRemove);
-  const card = document.querySelector(`article[data-id='${id}']`);
+function removeBook(toRemove, id) {
+  userLibrary = userLibrary.filter((book) => book.title !== toRemove);
+
+  const card = document.querySelector(`article[data-id="${id}"]`);
   card.remove();
 }
